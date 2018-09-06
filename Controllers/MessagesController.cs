@@ -1,10 +1,12 @@
 using System;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
+using MongoDB.Driver;
 
 namespace SimpleBot
 {
@@ -16,7 +18,7 @@ namespace SimpleBot
         {
             if ( activity != null && activity.Type == ActivityTypes.Message)
             {
-                await HandleActivityAsync(activity);
+               await HandleActivityAsync(activity);
             }
 
             // HTTP 202
