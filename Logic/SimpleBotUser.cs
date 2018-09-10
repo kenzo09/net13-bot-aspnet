@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using SimpleBot.Repository;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,77 +12,26 @@ namespace SimpleBot
 {
     public class SimpleBotUser
     {
-        public static string Reply(Message message)
-        {
-            SalvarHistorico(message);
-            SetProfile(message.Id, GetProfile(message.Id));
+        private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IMessageRepository _messageRepository;
 
-            return $"{message.User} disse '{message.Text}'";
+        public SimpleBotUser()
+        {
+            _messageRepository = new MessageMongoRepository();
+            _userProfileRepository = new UserProfileMongoRepository();
         }
 
-        public static void SalvarHistorico(Message message)
+        public string Reply(Message message)
         {
-            MongoClient client = new MongoClient(ConfigurationManager.ConnectionStrings["mongoDB"].ConnectionString);
-            var db = client.GetDatabase("net13");
-            var collection = db.GetCollection<BsonDocument>("message");
+            _messageRepository.SalvarHistorico(message);
 
-            var doc = new BsonDocument
-            {
-                { "id", message.Id },
-                { "user", message.User },
-                { "text", message.Text }
-            };
-
-            collection.InsertOne(doc);
-        }
-
-        public static UserProfile GetProfile(string id)
-        {
-            MongoClient client = new MongoClient(ConfigurationManager.ConnectionStrings["mongoDB"].ConnectionString);
-            var db = client.GetDatabase("net13");
-            var collection = db.GetCollection<BsonDocument>("userProfile");
-
-            var filtro = Builders<BsonDocument>.Filter.Eq("id", id);
-            var bsonProfile = collection.Find(filtro).FirstOrDefault();
-
-            if (bsonProfile == null)
-            {
-                return new UserProfile
-                {
-                    Id = id,
-                    Visitas = 0
-                };
-            }
-            
-            return new UserProfile
-            {
-                Id = bsonProfile["id"].ToString(),
-                Visitas = bsonProfile["visitas"].ToInt32()
-            };
-        }
-
-        public static void SetProfile(string id, UserProfile profile)
-        {
-            MongoClient client = new MongoClient(ConfigurationManager.ConnectionStrings["mongoDB"].ConnectionString);
-            var db = client.GetDatabase("net13");
-            var collection = db.GetCollection<BsonDocument>("userProfile");
+            var profile = _userProfileRepository.GetProfile(message.Id);
 
             profile.Visitas++;
 
-            var bson = new BsonDocument
-            {
-                { "id", profile.Id },
-                { "visitas", profile.Visitas }
-            };
+            _userProfileRepository.SetProfile(message.Id, profile);
 
-            if (profile.Visitas == 1)
-            {
-                collection.InsertOne(bson);
-            }
-            else
-            {
-                collection.ReplaceOne(Builders<BsonDocument>.Filter.Eq("id", id), bson);
-            }
+            return $"{message.User} disse '{message.Text}'";
         }
     }
 }

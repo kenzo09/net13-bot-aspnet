@@ -13,6 +13,13 @@ namespace SimpleBot
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        private readonly SimpleBotUser _simpleBotUser;
+
+        public MessagesController()
+        {
+            _simpleBotUser = new SimpleBotUser();
+        }
+
         [ResponseType(typeof(void))]
         public virtual async Task<HttpResponseMessage> Post([FromBody] Activity activity)
         {
@@ -34,7 +41,7 @@ namespace SimpleBot
 
             var message = new Message(userFromId, userFromName, text);
 
-            string response = SimpleBotUser.Reply(message);
+            string response = _simpleBotUser.Reply(message);
 
             await ReplyUserAsync(activity, response);
         }
