@@ -142,7 +142,10 @@
     <Compile Include="Logic\SimpleBotUser.cs" />
     <Compile Include="Logic\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IMessageRepository.cs" />
     <Compile Include="Repository\IUserProfileRepository.cs" />
+    <Compile Include="Repository\MessageMongo.cs" />
+    <Compile Include="Repository\MessageMongoRepository.cs" />
     <Compile Include="Repository\UserProfileMongo.cs" />
     <Compile Include="Repository\UserProfileMongoRepository.cs" />
   </ItemGroup>
