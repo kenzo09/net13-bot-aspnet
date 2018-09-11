@@ -1,9 +1,8 @@
 ﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
+using SimpleBot.Repository.Entities;
+using SimpleBot.Repository.Interfaces;
 using System.Configuration;
 using System.Linq;
-using System.Web;
 
 namespace SimpleBot.Repository
 {
@@ -21,7 +20,7 @@ namespace SimpleBot.Repository
         {
             var filtro = Builders<UserProfileMongo>.Filter.Eq("id", id);
             var userProfileMongo = _collection.Find(filtro).FirstOrDefault();
-
+            
             return new UserProfile
             {
                 Id = userProfileMongo._id,

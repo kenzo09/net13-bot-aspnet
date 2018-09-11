@@ -1,9 +1,7 @@
 ﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
+using SimpleBot.Repository.Entities;
+using SimpleBot.Repository.Interfaces;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 
 namespace SimpleBot.Repository
 {

@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using SimpleBot.Repository;
+using SimpleBot.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,12 +19,12 @@ namespace SimpleBot
         public SimpleBotUser()
         {
             _messageRepository = new MessageMongoRepository();
-            _userProfileRepository = new UserProfileMongoRepository();
+            _userProfileRepository = new UserProfileSQLServerRepository();
         }
 
         public string Reply(Message message)
         {
-            _messageRepository.SalvarHistorico(message);
+            //_messageRepository.SalvarHistorico(message);
 
             var profile = _userProfileRepository.GetProfile(message.Id);
 

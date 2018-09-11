@@ -48,6 +48,9 @@
     <NoWarn>CS1998</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="DnsClient, Version=1.0.7.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
       <HintPath>packages\DnsClient.1.0.7\lib\net45\DnsClient.dll</HintPath>
     </Reference>
@@ -142,12 +145,16 @@
     <Compile Include="Logic\SimpleBotUser.cs" />
     <Compile Include="Logic\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IMessageRepository.cs" />
-    <Compile Include="Repository\IUserProfileRepository.cs" />
-    <Compile Include="Repository\MessageMongo.cs" />
+    <Compile Include="Repository\ConnectionFactory.cs" />
+    <Compile Include="Repository\Interfaces\IMessageRepository.cs" />
+    <Compile Include="Repository\Interfaces\IUserProfileRepository.cs" />
+    <Compile Include="Repository\Entities\MessageMongo.cs" />
     <Compile Include="Repository\MessageMongoRepository.cs" />
-    <Compile Include="Repository\UserProfileMongo.cs" />
+    <Compile Include="Repository\Entities\MessageSQLServer.cs" />
+    <Compile Include="Repository\Entities\UserProfileMongo.cs" />
     <Compile Include="Repository\UserProfileMongoRepository.cs" />
+    <Compile Include="Repository\Entities\UserProfileSQLServer.cs" />
+    <Compile Include="Repository\UserProfileSQLServerRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
