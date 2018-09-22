@@ -10,9 +10,10 @@ namespace SimpleBot.Repository
     {
         private readonly IMongoCollection<UserProfileMongo> _collection;
 
-        public UserProfileMongoRepository()
+        // passe as configuracoes atraves do Construtor
+        public UserProfileMongoRepository(string connectionString)
         {
-            _collection = new MongoClient(ConfigurationManager.ConnectionStrings["mongoDB"].ConnectionString)
+            _collection = new MongoClient(connectionString)
                                         .GetDatabase("net13")
                                         .GetCollection<UserProfileMongo>("userProfile");
         }
