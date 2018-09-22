@@ -12,7 +12,10 @@ namespace SimpleBot.Repository
     {
         public static DbConnection GetConnection()
         {
+            // Evite usar o ConfigurationManager durante a execução - faça isso no Startup
             var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["sqlServer"].ConnectionString);
+            
+            // Nao está errado - mas muito cuidado com abertura automática de conexão
             connection.Open();
             
             return connection;
