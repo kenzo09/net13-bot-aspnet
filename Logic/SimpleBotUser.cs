@@ -11,15 +11,19 @@ using System.Web;
 
 namespace SimpleBot
 {
+    // Parabens! Voce corrigiu a classe!!! Ela nao é mais static.
+    
     public class SimpleBotUser
     {
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IMessageRepository _messageRepository;
 
-        public SimpleBotUser()
+        // Esta 100% correto. Uma alternativa seria passar os objetos atraves
+        // do construtor, deixando que a logica nao conheca o repositorio fisico
+        public SimpleBotUser(IMessageRepository messageRepository, IUserProfileRepository userProfileRepository)
         {
-            _messageRepository = new MessageMongoRepository();
-            _userProfileRepository = new UserProfileSQLServerRepository();
+            _messageRepository = messageRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         public string Reply(Message message)
